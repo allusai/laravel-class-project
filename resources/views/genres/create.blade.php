@@ -9,7 +9,7 @@
       {{csrf_field()}}
         <div class="form-group">
           <label for="genre">Genre</label>
-          <input type="text" name="genre" class="form-control" value="{{old('genre')}}">
+          <input type="text" name="genre" class="form-control" value="{{old('genre') == null ? $genre->Name : old('genre')}}">
           <small class="text-danger"> {{$errors->first('genre')}} </small>
           <input type="hidden" name="genreId" value="{{$genreIdFromUrl}}">
         </div>

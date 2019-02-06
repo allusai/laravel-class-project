@@ -22,13 +22,12 @@ class GenresController extends Controller
 
     public function create($genreIdFromUrl = null)
     {
-        if($genreIdFromUrl)
-            $genre = DB::table('genres')->where('GenreId', '=', $genreIdFromUrl)->get();
-        else
+        if($genreIdFromUrl) {
+            $genre = DB::table('genres')->where('GenreId', '=', $genreIdFromUrl)->first();
+        } else {
             $genre = "";
+        }
 
-        info("Hiyaa!");
-        info($genre);
         return view('genres.create', ['genre' => $genre, 'genreIdFromUrl' => $genreIdFromUrl]);
     }
 
