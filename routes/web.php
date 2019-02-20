@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -12,20 +13,47 @@
 */
 
 
-//When a request comes in for '/', this controller is called
-Route::get('/','InvoicesController@index');
-Route::get('/tracks.php', 'InvoicesController@genre');
-Route::get('/playlists', 'PlaylistController@index');
-Route::get('/playlists/new', 'PlaylistController@create');
-Route::get('/playlists/{id}', 'PlaylistController@index');
-Route::post('/playlists', 'PlaylistController@store');
+//When a request comes in for '/', the corresponding controller function is called
 
-Route::get('/tracks', 'TracksController@index');
-Route::post('/tracks', 'TracksController@store');
-Route::get('/tracks/new', 'TracksController@create');
-Route::get('/genres', 'GenresController@index');
-Route::post('/genres', 'GenresController@store');
-Route::get('/genres/{id}/edit', 'GenresController@create');
+Route::middleware(['WebsiteAvailable'])->group(function() {
+    Route::get('/tracks.php', 'InvoicesController@genre');
+    Route::get('/playlists', 'PlaylistController@index');
+    Route::get('/playlists/new', 'PlaylistController@create');
+    Route::get('/playlists/{id}', 'PlaylistController@index');
+    Route::post('/playlists', 'PlaylistController@store');
+
+    Route::get('/tracks', 'TracksController@index');
+    Route::post('/tracks', 'TracksController@store');
+    Route::get('/tracks/new', 'TracksController@create');
+    Route::get('/genres', 'GenresController@index');
+    Route::post('/genres', 'GenresController@store');
+    Route::get('/genres/{id}/edit', 'GenresController@create');
+
+    //Authentication Routes
+    Route::get('/signup', 'SignUpController@index');
+    Route::post('/signup', 'SignUpController@signup');
+});
+
+//This is a route that only works for authenticated users
+Route::middleware(['authenticated'])->group(function() {
+    Route::get('/profile','AdminController@index');
+    Route::get('/','InvoicesController@index');
+});
+
+
+Route::middleware(['authenticated'])->group(function() {
+        Route::get('/settings','MaintenanceController@admin');
+        Route::post('/settings', 'MaintenanceController@toggleMaintenance');
+});
+
+Route::get('/maintenance', 'MaintenanceController@index');
+
+    //These routes should be available regardless of maintenance mode
+
+//The rest of the Authenticated Routes
+Route::get('/login', 'LoginController@index');
+Route::post('/login', 'LoginController@login');
+Route::get('/logout', 'LoginController@logout');
 
 
 //Route is the first thing we make

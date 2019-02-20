@@ -15,6 +15,6 @@ class Artist extends Model
     //$songsByThisArtist = $artist->songs    We don't even need to use parentheses!
     public function songs()
     {
-        return
+        return this->hasMany('App\Song', 'ArtistId', 'ArtistId');
     }
 }

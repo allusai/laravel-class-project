@@ -1,19 +1,39 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
 
   <!-- This places a title specific to what the page is-->
+  <!-- Yield tags are like copy and paste -->
   <title>@yield('title')</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 <body>
+  <div class="container-fluid">
+    <ul class="nav">
+      @if (Auth::check())
+        <li class="nav-item">
+          <a href="/profile" class="nav-link">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a href="/tracks" class="nav-link">Tracks</a>
+        </li>
+        <li class="nav-item">
+          <a href="/logout" class="nav-link">Logout</a>
+        </li>
+      @else
+        <li class="nav-item">
+          <a href="/login" class="nav-link">Login</a>
+        </li>
+        <li class="nav-item">
+          <a href="/signup" class="nav-link">Sign Up</a>
+        </li>
+      @endif
+    </ul>
 
-	<div class="container-fluid">
-	    <!-- Yield tags are like copy and paste -->
-	    @yield('main')
-
-	</div>
+    @yield('main')
+  </div>
 </body>
 </html>
 
